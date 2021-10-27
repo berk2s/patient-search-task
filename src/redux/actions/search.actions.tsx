@@ -57,9 +57,7 @@ export function search(
         dispatch(endSearching(response));
         return response?.entry;
       })
-      .then((items?: SearchItem[]) => {
-        console.log(JSON.stringify(items));
-      })
+
       .then(() => {
         navigate('Results', null);
       });

@@ -13,7 +13,5 @@ async function search(params: SearchRequestParams): Promise<SearchResult> {
     },
   });
 
-  console.log(params);
-
   return searchResults;
 }
