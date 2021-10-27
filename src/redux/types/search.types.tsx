@@ -4,6 +4,8 @@ export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 export type SearchParams = 'name' | 'given' | 'family' | 'id' | '';
 
+export type SearchCaseAsteriks = 'end' | 'start' | 'contain' | 'exactly';
+
 export interface SearchState {
   searchParams: Array<SearchParams>;
   searchKeys: string[];
