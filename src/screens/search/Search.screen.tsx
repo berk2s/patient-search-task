@@ -1,30 +1,24 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React from 'react';
+import {View} from 'react-native';
 import {Header} from '../../components';
-import {search} from '../../redux/actions';
 import {SearchForm} from './SearchForm';
+import {SearchResults} from './SearchResults';
 import styles from './styles';
 
 export const SearchScreen = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(search(['*va'], ['family']));
-  }, []);
-
   return (
     <View style={styles.pageWrapper}>
       <View style={styles.headerWrapper}>
-        <Header
-          title={'Welcome to patient search'}
-          desc={'You can search patients by parameters and see details!'}
-        />
+        <View style={styles.headerArea}>
+          <Header
+            title={'Welcome to patient search'}
+            desc={'You can search patients by parameters and see details!'}
+          />
+        </View>
 
-        <SearchForm />
-      </View>
-      <View style={styles.contentWrapper}>
-        <Text>Content!</Text>
+        <View style={styles.formArea}>
+          <SearchForm />
+        </View>
       </View>
     </View>
   );

@@ -8,19 +8,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 15,
   },
+  headerArea: {
+    display: 'flex',
+    flex: 1,
+  },
+  formArea: {
+    display: 'flex',
+    flex: 3,
+  },
   headerWrapper: {
     display: 'flex',
-
-    borderBottomColor: '#B2B1B9',
-    borderBottomWidth: 1,
-    paddingBottom: 20,
     zIndex: 999999,
   },
   pageWrapper: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
     flex: 1,
-    backgroundColor: '#f1f2f6',
   },
 });
 

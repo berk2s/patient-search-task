@@ -8,8 +8,8 @@ export type SearchCaseAsteriks = 'end' | 'start' | 'contain' | 'exactly';
 
 export interface SearchState {
   searchParams: Array<SearchParams>;
-  searchKeys: string[];
-  results: SearchResult[];
+  searchKeys: string;
+  results: SearchResult | null;
   isSearching: boolean;
 }
 
@@ -37,6 +37,7 @@ export interface SearchItem {
     }[];
     gender: string;
     birthDate: Date;
+    deceasedBoolean: boolean;
     address: {
       use: string;
       line: string[];
@@ -58,7 +59,7 @@ export interface SearchResult {
 
 interface StartSearchingPayload {
   searchParams: Array<SearchParams>;
-  searchKeys: string[];
+  searchKey: string;
 }
 
 interface StartSearchingAction {

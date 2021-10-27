@@ -1,9 +1,11 @@
 import {ActionCreator} from 'redux';
-import {searchService} from '../../services';
+import {navigate, searchService} from '../../services';
+import caseConverter from '../../utils/case-converter';
 import {
   CLEAR_SEARCH,
   END_SEARCH,
   SearchActionTypes,
+  SearchCaseAsteriks,
   SearchItem,
   SearchParams,
   SearchResult,
@@ -11,13 +13,13 @@ import {
 } from '../types';
 
 export const startSearching: ActionCreator<SearchActionTypes> = (
-  keys: string[],
+  key: string,
   params: Array<SearchParams>,
 ) => {
   return {
     type: START_SEARCH,
     payload: {
-      searchKeys: keys,
+      searchKey: key,
       searchParams: params,
     },
   };
@@ -33,27 +35,33 @@ export const endSearching: ActionCreator<SearchActionTypes> = (
 };
 
 export function search(
-  searchKeys: string[],
+  searchKey: string,
   searchParams: Array<SearchParams>,
+  searchCase: SearchCaseAsteriks,
 ) {
   return (dispatch: any) => {
-    dispatch(startSearching(searchKeys, searchParams));
+    dispatch(startSearching(searchKey, searchParams));
 
     let params = searchParams.reduce((prev, curr, index) => {
       return {
         ...prev,
-        [curr]: searchKeys[index],
+        [curr]: caseConverter(searchCase, searchKey),
       };
     }, {});
 
     return searchService
       .search(params)
       .then((response: SearchResult) => {
+        console.log(response);
+
         dispatch(endSearching(response));
         return response?.entry;
       })
       .then((items?: SearchItem[]) => {
         console.log(JSON.stringify(items));
+      })
+      .then(() => {
+        navigate('Results', null);
       });
   };
 }

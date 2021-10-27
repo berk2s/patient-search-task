@@ -33,17 +33,35 @@ export const Dropdown = (props: DropdownProps) => {
   };
 
   const handleSelectedItem = (item: DropdownItem) => {
+    let _selectedItems = [];
     if (isItemSelected(item.id)) {
-      setSelectedItems(selectedItems.filter(_item => _item.id !== item.id));
+      _selectedItems = selectedItems.filter(_item => _item.id !== item.id);
+      setSelectedItems(_selectedItems);
     } else {
-      if (props.multiple) {
-        setSelectedItems(prev => [...prev, item]);
+      if (props.multiple === true) {
+        setSelectedItems(prev => [
+          ...prev,
+          {
+            id: item.id,
+            key: item.key,
+            value: item.value,
+          },
+        ]);
+        _selectedItems = [
+          ...selectedItems,
+          {
+            id: item.id,
+            key: item.key,
+            value: item.value,
+          },
+        ];
       } else {
-        setSelectedItems([item]);
+        _selectedItems = [item];
+        setSelectedItems(_selectedItems);
       }
     }
 
-    props.onChange(selectedItems);
+    props.onChange(_selectedItems);
 
     setShowDropdown(false);
   };

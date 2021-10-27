@@ -1,13 +1,21 @@
 import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 
-export const Input = (props: any) => {
+interface InputProps {
+  onChangeText(s: string): void;
+  placeholder: string;
+  placeholderColor: string;
+}
+
+export const Input = (props: InputProps) => {
   return (
     <View style={styles.inputAreaWrapper}>
       <TextInput
         style={styles.input}
         placeholder={props.placeholder}
         placeholderTextColor={props.placeholderColor}
+        onChangeText={props.onChangeText}
+        autoCapitalize={'none'}
       />
     </View>
   );

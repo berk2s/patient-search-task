@@ -1,18 +1,47 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button, Dropdown, Input} from '../../components';
 import {paramsData, searchCasesData} from '../../data';
+import {search} from '../../redux/actions';
+import {RootState} from '../../redux/reducers';
+import {SearchState} from '../../redux/types';
 
 export const SearchForm = () => {
-  function paramsDropdownChange(selectedParams: any) {
-    console.log(selectedParams);
+  const dispatch = useDispatch();
+
+  const {isSearching}: {isSearching: boolean} = useSelector(
+    (state: RootState) => state.search,
+  );
+
+  const [selectedParams, setSelectedParams] = useState<any>(null);
+  const [selectedCase, setSelectedCase] = useState<any>(null);
+  const [searchKey, setSearchKey] = useState<string | null>(null);
+
+  function paramsDropdownChange(_selectedParams: any) {
+    const searchParams = _selectedParams.map((p: any) => p.value);
+
+    setSelectedParams(searchParams);
   }
 
-  function casesDropdownChange(selectedParams: any) {
-    console.log(selectedParams);
+  function casesDropdownChange(_selectedCase: any) {
+    const searchCase = _selectedCase.map((c: any) => c.value);
+
+    setSelectedCase(searchCase);
   }
 
-  function handleSearchSubmit() {}
+  function handleSearchSubmit() {
+    if (!selectedParams || !selectedCase || !searchKey) {
+      Alert.alert('Some fields are empty');
+      return;
+    }
+
+    dispatch(search(searchKey, selectedParams, selectedCase));
+  }
+
+  function onChangeSearchKeyInput(key: string) {
+    setSearchKey(key.trim() === '' ? null : key);
+  }
 
   return (
     <View style={styles.searchFormWrapper}>
@@ -39,11 +68,15 @@ export const SearchForm = () => {
           <Input
             placeholder={'Type something (E.g. Anita)'}
             placeholderColor={'#595260'}
+            onChangeText={onChangeSearchKeyInput}
           />
         </View>
 
         <View style={styles.buttonArea}>
-          <Button onPress={handleSearchSubmit} text={'Search'} />
+          <Button
+            onPress={handleSearchSubmit}
+            text={isSearching ? <ActivityIndicator color={'#fff'} /> : 'Search'}
+          />
         </View>
       </View>
       <View style={styles.keyArea}></View>
@@ -70,6 +103,7 @@ const styles = StyleSheet.create({
   paramsArea: {},
   searchFormWrapper: {
     paddingHorizontal: 15,
-    paddingTop: 20,
+    display: 'flex',
+    flex: 1,
   },
 });

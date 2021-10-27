@@ -2,8 +2,8 @@ import {CLEAR_SEARCH, END_SEARCH, SearchState, START_SEARCH} from '../types';
 
 const initialState: SearchState = {
   searchParams: [],
-  searchKeys: [],
-  results: [],
+  searchKeys: '',
+  results: null,
   isSearching: false,
 };
 
@@ -19,7 +19,7 @@ export function searchReducer(state: SearchState = initialState, action: any) {
     case END_SEARCH:
       return {
         ...state,
-        results: action.payload.results,
+        results: action.payload,
         isSearching: false,
       };
     case CLEAR_SEARCH:

@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
   headerContent: {
     display: 'flex',
     paddingHorizontal: 15,
+    paddingTop: 25,
   },
   headerWrapper: {
     display: 'flex',
-    paddingBottom: 15,
   },
 });
