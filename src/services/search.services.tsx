@@ -8,6 +8,9 @@ export const searchService = {
 async function search(params: SearchRequestParams): Promise<SearchResult> {
   const searchResults: SearchResult = await client.get('/', {
     params,
+    headers: {
+      'Content-Type': 'application/fhir+json',
+    },
   });
 
   console.log(params);

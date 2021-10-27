@@ -34,6 +34,9 @@ export const SearchForm = () => {
     if (!selectedParams || !selectedCase || !searchKey) {
       Alert.alert('Some fields are empty');
       return;
+    } else if (searchKey.trim().length < 2) {
+      Alert.alert('You must write more than two character');
+      return;
     }
 
     dispatch(search(searchKey, selectedParams, selectedCase));
